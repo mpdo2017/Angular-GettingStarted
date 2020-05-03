@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
       <pm-products></pm-products>
   </div>
   `
-}
+})
 export class AppComponent  {
-  pageTitle: string = 'Acme Product Management';
+  pageTitle = 'Acme Product Management';
 }
