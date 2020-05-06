@@ -1,21 +1,34 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {IProduct} from '../product';
+import {ProductService} from '../product.service';
 
-
-@Component({
+@Component({// metadata to define the template//
   selector: 'pm-products',
-  templateUrl: './product-list.component.html',
-  // defines the location to link template//
-  styleUrls: ['./product-list.component.css']
+  templateUrl: './product-list.component.html', // defines the location to link template//
+  styleUrls: ['./product-list.component.css'],
+  providers: [ProductService]
 })
-// metadata to define the template//
 
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
   pageTitle = 'Product List';
-  imageWidth: number = 50;
-  imageMargin: number = 2;
-  showImage: boolean = false;
-  listFilter: string = 'cart';
-  products: any[] = [
+  imageWidth = 50;
+  imageMargin = 2;
+  showImage = false;
+  _listFilter = '';
+
+  get listFilter(): string{
+    return this._listFilter;
+  }
+  set listFilter(value) {
+    this._listFilter = value;
+    this.filteredProducts= this.listFilter ? this.performFilter(this.listFilter): this.products;
+  }
+
+  constructor(private productService: ProductService) {
+  } // place default values with more complex properties in the default constructor.
+
+  filteredProducts: IProduct[];
+  products: IProduct[] = [
     {
       productId: 1,
       productName: 'Leaf Rake',
@@ -68,9 +81,25 @@ export class ProductListComponent {
     }
   ];
 
+  performFilter(filterBy: string): IProduct[] {
+    filterBy = filterBy.toLocaleLowerCase();// filters to lowercase
+    return this.products.filter((product: IProduct) =>
+    // creates a new array
+    // tslint:disable-next-line:max-line-length
+    product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);// each product in the list return as lowercase and filtered by index.
+  }
+
+  ngOnInit():void {
+    console.log('In OnInit');
+  }
+
   toggleImage(): void {
     this.showImage = !this.showImage;
   }
-}
 
+  onNotify(message: string): void{
+
+  }
+
+}
 
