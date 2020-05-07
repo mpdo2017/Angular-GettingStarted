@@ -90,7 +90,13 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit():void {
-    console.log('In OnInit');
+    this.productService.getProduct().subscribe({
+      next: products => {
+      this.products = products,
+      this.filteredProducts = this.products
+      },
+      error: err => this.errorMessage = err
+    });
   }
 
   toggleImage(): void {

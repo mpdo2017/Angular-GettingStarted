@@ -7,6 +7,8 @@ import {FormsModule} from '@angular/forms';
 import {ConvertToSpacesPipe} from './shared/convert-to-spaces.pipe';
 import {StarComponent} from './shared/star.component';
 import {ProductService} from './products/product.service';
+import {HttpClientModule} from "@angular/common/http";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -17,7 +19,15 @@ import {ProductService} from './products/product.service';
   ],
   imports: [
         BrowserModule,
-        FormsModule
+        FormsModule,
+        HttpClientModule,
+        RouterModule.forRoot([
+          { path: 'products', component: ProductListComponent},
+          //{ path: 'products/:id', component: ProductDetailComponent},
+         // {path: 'welcome', component: WelcomeComponent},
+          { path: '', redirectTo: '', pathMatch: 'full'},
+         // { path: '**', component: PageNotFoundComponent}
+        ], {useHash: true})
     ],
   bootstrap: [AppComponent],
   providers: [ProductService]
