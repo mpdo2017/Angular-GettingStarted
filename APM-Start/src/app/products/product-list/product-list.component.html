@@ -38,7 +38,7 @@
                     [style.width.px]='imageWidth'
                     [style.margin.px]='imageMargin'>
               </td>
-              <td>{{product.productName}}</td>
+              <td><a [routerLink]="['/product', product.productId]"></a> {{product.productName}}</td>
               <td>{{product.productCode | convertToSpaces: '-'}}</td>
               <td>{{product.releaseDate}}</td>
               <td>{{product.price | currency: 'USD': 'symbol':'1.2-2'}}</td>
